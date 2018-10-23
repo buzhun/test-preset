@@ -5,15 +5,22 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "commit": "git cz"
   },
   "dependencies": {
     "vue": "^2.5.17"
   },
   "devDependencies": {
+    "@commitlint/cli": "7.2.0",
+    "@commitlint/config-conventional": "7.1.2",
     "@vue/cli-plugin-babel": "^3.0.4",
     "@vue/cli-plugin-eslint": "^3.0.4",
     "@vue/cli-service": "^3.0.4",
+    "commitizen": "2.10.1",
+    "cz-customizable": "5.2.0",
+    "lint-staged": "7.3.0",
+    "vue-cli-plugin-test-commit": "^0.0.3",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
@@ -30,6 +37,9 @@
       "parser": "babel-eslint"
     }
   },
+  "prettier": {
+    "semi": false
+  },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
@@ -39,5 +49,23 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": ".cz-configrc.js"
+    }
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged",
+    "commit-msg": "commitlint -e $GIT_PARAMS"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx,json,scss,less}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
 }
